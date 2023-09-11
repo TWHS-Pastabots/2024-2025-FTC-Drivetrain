@@ -16,7 +16,14 @@ public class LasagnaHardware {
     public DcMoterEx motors[];
 
 
-public void intializeMotors(HardwareMap hardwareMap){
-    
+public void intializeDriveMotors(HardwareMap hardwareMap){
+    frontLeft = hardwareMap(DcMoterEx.class, LaagnaIDS.LEFT_FRONT_MOTOR );
+    frontRight = hardwareMap(DcMoterEx.class, LaagnaIDS.RIGHT_FRONT_MOTOR );
+    rearLeft = hardwareMap(DcMoterEx.class, LaagnaIDS.LEFT_REAR_MOTOR );
+    rearRight = hardwareMap(DcMoterEx.class, LaagnaIDS.RIGHT_REAR_MOTOR );
+
+    motors = new DcMoterEx[]{frontLeft, frontRight, rearLeft, rearRight};
+
+    leftFront.setDirection
 }
 }
