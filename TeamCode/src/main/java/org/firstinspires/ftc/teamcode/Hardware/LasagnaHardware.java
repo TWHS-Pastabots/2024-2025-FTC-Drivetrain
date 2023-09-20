@@ -12,18 +12,35 @@ public class LasagnaHardware {
     public DcMotorEx rearLeft = null;
     public DcMotorEx frontRight = null;
     public DcMotorEx rearRight = null;
+    public DcMotorEx intakeMotor = null;
+    public DcMotorEx flyWheelMotor = null;
 
     public DcMoterEx motors[];
 
+    public void init(){
+        Assert.assertNotNull(hardwareMap);
+        intializeDriveMotors(hardwareMap);
+    }
 
 public void intializeDriveMotors(HardwareMap hardwareMap){
-    frontLeft = hardwareMap(DcMoterEx.class, LaagnaIDS.LEFT_FRONT_MOTOR );
-    frontRight = hardwareMap(DcMoterEx.class, LaagnaIDS.RIGHT_FRONT_MOTOR );
-    rearLeft = hardwareMap(DcMoterEx.class, LaagnaIDS.LEFT_REAR_MOTOR );
-    rearRight = hardwareMap(DcMoterEx.class, LaagnaIDS.RIGHT_REAR_MOTOR );
+    frontLeft = hardwareMap(DcMoterEx.class, LaagnaIDS.LEFT_FRONT_MOTOR);
+    frontRight = hardwareMap(DcMoterEx.class, LaagnaIDS.RIGHT_FRONT_MOTOR);
+    rearLeft = hardwareMap(DcMoterEx.class, LaagnaIDS.LEFT_REAR_MOTOR);
+    rearRight = hardwareMap(DcMoterEx.class, LaagnaIDS.RIGHT_REAR_MOTOR);
+
+    intakeMotor = hardwareMap(DcMoterEx.class, LasagnaIDS.INTAKE_MOTOR);
 
     motors = new DcMoterEx[]{frontLeft, frontRight, rearLeft, rearRight};
 
-    leftFront.setDirection
+    frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+    rearLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+    frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
+    rearRight.setDirection(DcMotorSimple.Direction.FORWARD);
+
+    for(DcMotorEx motor : motors ){
+        motor.setPower(0.0);
+        motor.setZeroBehavior(DcMotorEx.setZeroBehavior.BRAKE);
+        motor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+    }
 }
 }
