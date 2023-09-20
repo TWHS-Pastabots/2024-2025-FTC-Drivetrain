@@ -27,15 +27,17 @@ public void intializeDriveMotors(HardwareMap hardwareMap){
     frontRight = hardwareMap(DcMoterEx.class, LaagnaIDS.RIGHT_FRONT_MOTOR);
     rearLeft = hardwareMap(DcMoterEx.class, LaagnaIDS.LEFT_REAR_MOTOR);
     rearRight = hardwareMap(DcMoterEx.class, LaagnaIDS.RIGHT_REAR_MOTOR);
+    // write the flywheel and intake motors in here
 
     intakeMotor = hardwareMap(DcMoterEx.class, LasagnaIDS.INTAKE_MOTOR);
 
-    motors = new DcMoterEx[]{frontLeft, frontRight, rearLeft, rearRight};
+    motors = new DcMoterEx[]{frontLeft, frontRight, rearLeft, rearRight}; // add flywheel and intake motors to "motors"
 
     frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     rearLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
     rearRight.setDirection(DcMotorSimple.Direction.FORWARD);
+    // set flywheel and intake motor directions
 
     for(DcMotorEx motor : motors ){
         motor.setPower(0.0);
