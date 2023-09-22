@@ -2,29 +2,29 @@ package org.firstinspires.ftc.teamcode.Drive;
 
 import org.firstinspires.ftc.teamcode.Hardware.LasagnaHardware;
 
-import com.qualcomm.robotcore.eventloop.opmode.Opmode;
-import com.qualcomm.robotcore.hardware.DCcMotor;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@teleop(name = "Lasagna")
-public class Lasagna extends OpMode{
+@TeleOp (name = "Lasagna")
+public class Lasagna extends OpMode {
     LasagnaHardware hardware;
    
-    public final double FAST_MODE = .75;
-    public final double PREC_MODE = .45;
-    double currentMode = FAST_MODE;
+    public static final double FAST_MODE = .75;
+    public static final double PREC_MODE = .45;
+    double currentMode;
     ElapsedTime buttonTime = null;
 
     public void init(){
         hardware = new LasagnaHardware();
-        hardware.init(hardWareMap);
+        hardware.init(hardwareMap);
+        currentMode = FAST_MODE;
         buttonTime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
         telemetry.addData("Status: ", "Initialized");
         telemetry.update();
     }
+
     public void start(){
         telemetry.addData("Status: ", "Started");
         telemetry.update();
@@ -33,7 +33,7 @@ public class Lasagna extends OpMode{
         drive();
     }
 
-    public void drive(){
+    public void drive() {
         double y = -gamepad1.left_stick_y; // This is reversed
         double x = gamepad1.left_stick_x; // Counteract imperfect strafing
         double z = gamepad1.right_stick_x;
@@ -71,11 +71,11 @@ public class Lasagna extends OpMode{
             rightFrontPower = -1;
         }
 
-        if(gamepad1.getSquare() && currentMode == FAST_MODE && buttonTime >= 500){
+        if(gamepad1.square && currentMode == FAST_MODE && buttonTime.time() >= 500) {
             currentMode = PREC_MODE;
             buttonTime.reset();
         }
-        else if(gamepad1.getSquare() && currentMode == PREC_MODE && buttonTime >= 500){
+        else if(gamepad1.square && currentMode == PREC_MODE && buttonTime.time() >= 500) {
             currentMode = FAST_MODE;
             buttonTime.reset();
         }

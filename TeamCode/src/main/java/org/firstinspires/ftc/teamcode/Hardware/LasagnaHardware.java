@@ -2,9 +2,8 @@ package org.firstinspires.ftc.teamcode.Hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.robotcore.internal.system.Assert;
 
 public class LasagnaHardware {
@@ -15,23 +14,25 @@ public class LasagnaHardware {
     public DcMotorEx intakeMotor = null;
     public DcMotorEx flyWheelMotor = null;
 
-    public DcMoterEx motors[];
+    public DcMotorEx[] motors;
 
-    public void init(){
+    public LasagnaHardware () {}
+
+    public void init(HardwareMap hardwareMap){
         Assert.assertNotNull(hardwareMap);
-        intializeDriveMotors(hardwareMap);
+        initializeDriveMotors(hardwareMap);
     }
 
-public void intializeDriveMotors(HardwareMap hardwareMap){
-    frontLeft = hardwareMap(DcMoterEx.class, LaagnaIDS.LEFT_FRONT_MOTOR);
-    frontRight = hardwareMap(DcMoterEx.class, LaagnaIDS.RIGHT_FRONT_MOTOR);
-    rearLeft = hardwareMap(DcMoterEx.class, LaagnaIDS.LEFT_REAR_MOTOR);
-    rearRight = hardwareMap(DcMoterEx.class, LaagnaIDS.RIGHT_REAR_MOTOR);
+public void initializeDriveMotors(HardwareMap hardwareMap){
+    frontLeft = hardwareMap.get(DcMotorEx.class, LasagnaIDS.LEFT_FRONT_MOTOR);
+    frontRight = hardwareMap.get(DcMotorEx.class, LasagnaIDS.RIGHT_FRONT_MOTOR);
+    rearLeft = hardwareMap.get(DcMotorEx.class, LasagnaIDS.LEFT_REAR_MOTOR);
+    rearRight = hardwareMap.get(DcMotorEx.class, LasagnaIDS.RIGHT_REAR_MOTOR);
     // write the flywheel and intake motors in here
 
-    intakeMotor = hardwareMap(DcMoterEx.class, LasagnaIDS.INTAKE_MOTOR);
+    intakeMotor = hardwareMap.get(DcMotorEx.class, LasagnaIDS.INTAKE_MOTOR);
 
-    motors = new DcMoterEx[]{frontLeft, frontRight, rearLeft, rearRight}; // add flywheel and intake motors to "motors"
+    motors = new DcMotorEx[]{frontLeft, frontRight, rearLeft, rearRight}; // add flywheel and intake motors to "motors"
 
     frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     rearLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -41,7 +42,7 @@ public void intializeDriveMotors(HardwareMap hardwareMap){
 
     for(DcMotorEx motor : motors ){
         motor.setPower(0.0);
-        motor.setZeroBehavior(DcMotorEx.setZeroBehavior.BRAKE);
+        motor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         motor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
     }
 }
