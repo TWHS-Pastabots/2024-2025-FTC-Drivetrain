@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class Lasagna extends OpMode {
     LasagnaHardware hardware;
    
-    public static final double FAST_MODE = .75;
+    public static final double FAST_MODE = .9;
     public static final double PREC_MODE = .45;
     double currentMode;
     ElapsedTime buttonTime = null;
@@ -58,16 +58,30 @@ public class Lasagna extends OpMode {
             rightRearPower /= max;
         }
 
-        if(gamepad1.dpad_up || gamepad1.dpad_right){
+        if(gamepad1.dpad_left){
             leftFrontPower = -1;
             rightRearPower = -1;
             leftRearPower = 1;
             rightFrontPower = 1;
         }
-        else if(gamepad1.dpad_down || gamepad1.dpad_left){
+        else if(gamepad1.dpad_right){
             leftFrontPower = 1;
             rightRearPower = 1;
             leftRearPower = -1;
+            rightFrontPower = -1;
+        }
+        else if (gamepad1.dpad_up)
+        {
+           leftFrontPower = 1;
+           rightRearPower = 1;
+           leftRearPower = 1;
+           rightFrontPower = 1;
+        }
+        else if(gamepad1.dpad_down)
+        {
+            leftFrontPower = -1;
+            leftRearPower = -1;
+            rightRearPower = -1;
             rightFrontPower = -1;
         }
 

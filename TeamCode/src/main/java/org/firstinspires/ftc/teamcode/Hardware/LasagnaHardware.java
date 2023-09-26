@@ -11,8 +11,8 @@ public class LasagnaHardware {
     public DcMotorEx rearLeft = null;
     public DcMotorEx frontRight = null;
     public DcMotorEx rearRight = null;
-    public DcMotorEx intakeMotor = null;
-    public DcMotorEx flyWheelMotor = null;
+    //public DcMotorEx intakeMotor = null;
+   // public DcMotorEx flyWheelMotor = null;
 
     public DcMotorEx[] motors;
 
@@ -30,13 +30,13 @@ public void initializeDriveMotors(HardwareMap hardwareMap){
     rearRight = hardwareMap.get(DcMotorEx.class, LasagnaIDS.RIGHT_REAR_MOTOR);
     // write the flywheel and intake motors in here
 
-    intakeMotor = hardwareMap.get(DcMotorEx.class, LasagnaIDS.INTAKE_MOTOR);
+    //intakeMotor = hardwareMap.get(DcMotorEx.class, LasagnaIDS.INTAKE_MOTOR);
 
     motors = new DcMotorEx[]{frontLeft, frontRight, rearLeft, rearRight}; // add flywheel and intake motors to "motors"
 
     frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     rearLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-    frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
+    frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
     rearRight.setDirection(DcMotorSimple.Direction.FORWARD);
     // set flywheel and intake motor directions
 
