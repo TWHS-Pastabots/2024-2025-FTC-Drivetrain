@@ -12,6 +12,7 @@ public class Lasagna extends OpMode {
    
     public static final double FAST_MODE = .75;
     public static final double PREC_MODE = .45;
+
     double currentMode;
     ElapsedTime buttonTime = null;
 
@@ -31,6 +32,10 @@ public class Lasagna extends OpMode {
     }
     public void loop(){
         drive();
+        intake();
+        launch();
+        lift();
+        //arm();
     }
 
     public void drive() {
@@ -84,5 +89,37 @@ public class Lasagna extends OpMode {
         hardware.rearLeft.setPower(leftRearPower * currentMode);
         hardware.frontRight.setPower(rightFrontPower * currentMode);
         hardware.rearRight.setPower(rightRearPower * currentMode);
+    }
+
+    public void intake(){
+        double intakeOn = .5;
+        double intakeOff = 0.0;
+        
+        if(gamepad2.square && buttonTime.time >= 500){
+            hardware.intakeMotor.setPower(intakeOn);
+            buttonTime.reset();
+        }
+        else{
+            hardware.intakeMotor.setPower(intakeOff);
+        }
+    }
+
+    public void launch(){
+        double flyWheelOn = .75;
+        double flyWheelOff = 0.0;
+
+        if(gamepad2.triangle && buttonTime.time >= 500){
+            hardware.flyWheelMotor.setPower(flyWheelOn);
+            buttonTime.reset();
+        }
+        else{
+            hardware.flyWheelMotor.setPower(flyWheelOff);
+        }
+
+    }
+
+    public void lift(){
+        double y = gamepad2.left_stick_y *.1;
+        hardware.liftMotor.setPower(y);
     }
 }
