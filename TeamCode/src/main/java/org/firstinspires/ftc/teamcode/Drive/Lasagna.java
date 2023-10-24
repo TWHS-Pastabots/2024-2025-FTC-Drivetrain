@@ -33,8 +33,8 @@ public class Lasagna extends OpMode {
     public void loop(){
         drive();
         intake();
-        launch();
-        lift();
+        //launch();
+        //lift();
         //arm();
     }
 
@@ -65,15 +65,15 @@ public class Lasagna extends OpMode {
 
         if(gamepad1.dpad_left){
             leftFrontPower = -1;
-            rightRearPower = -1;
+            rightRearPower = 1;
             leftRearPower = 1;
-            rightFrontPower = 1;
+            rightFrontPower = -1;
         }
         else if(gamepad1.dpad_right){
             leftFrontPower = 1;
-            rightRearPower = 1;
+            rightRearPower = -1;
             leftRearPower = -1;
-            rightFrontPower = -1;
+            rightFrontPower = 1;
         }
         else if (gamepad1.dpad_up)
         {
@@ -106,34 +106,34 @@ public class Lasagna extends OpMode {
     }
 
     public void intake(){
-        double intakeOn = .5;
+        double intakeOn = -1;
         double intakeOff = 0.0;
         
-        if(gamepad2.square && buttonTime.time >= 500){
+        if(gamepad2.square){
             hardware.intakeMotor.setPower(intakeOn);
-            buttonTime.reset();
+
         }
         else{
             hardware.intakeMotor.setPower(intakeOff);
         }
     }
 
-    public void launch(){
-        double flyWheelOn = .75;
-        double flyWheelOff = 0.0;
+  //  public void launch(){
+    //    double flyWheelOn = .75;
+      //  double flyWheelOff = 0.0;
 
-        if(gamepad2.triangle && buttonTime.time >= 500){
-            hardware.flyWheelMotor.setPower(flyWheelOn);
-            buttonTime.reset();
-        }
-        else{
-            hardware.flyWheelMotor.setPower(flyWheelOff);
-        }
+        //if(gamepad2.triangle && buttonTime.time() >= 500){
+          //  hardware.flyWheelMotor.setPower(flyWheelOn);
+            //buttonTime.reset();
+        //}
+        //else{
+         //   hardware.flyWheelMotor.setPower(flyWheelOff);
+       // }
 
-    }
+    //}
 
-    public void lift(){
-        double y = gamepad2.left_stick_y *.1;
-        hardware.liftMotor.setPower(y);
-    }
+//    public void lift(){
+//        double y = gamepad2.left_stick_y *.1;
+//        hardware.liftMotor.setPower(y);
+//    }
 }

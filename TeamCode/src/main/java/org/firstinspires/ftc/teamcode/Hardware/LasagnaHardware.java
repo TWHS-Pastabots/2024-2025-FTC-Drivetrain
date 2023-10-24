@@ -13,16 +13,15 @@ public class LasagnaHardware {
     public DcMotorEx frontRight = null;
     public DcMotorEx rearRight = null;
 
-    //public DcMotorEx intakeMotor = null;
    // public DcMotorEx flyWheelMotor = null;
 
     public DcMotorEx intakeMotor = null;
-    public DcMotorEx flyWheelMotor = null;
-    public DcMotorEx liftMotor = null;
-
-    public Servo pushServo = null;
-    public Servo clawServo = null;
-    public Servo armServo = null;
+    //public DcMotorEx flyWheelMotor = null;
+//    public DcMotorEx liftMotor = null;
+//
+//    public Servo pushServo = null;
+//    public Servo clawServo = null;
+//    public Servo armServo = null;
 
 
     public DcMotorEx[] motors;
@@ -44,22 +43,14 @@ public void initializeDriveMotors(HardwareMap hardwareMap){
     rearRight = hardwareMap.get(DcMotorEx.class, LasagnaIDS.RIGHT_REAR_MOTOR);
 
 
-    //intakeMotor = hardwareMap.get(DcMotorEx.class, LasagnaIDS.INTAKE_MOTOR);
-
-    
-    flyWheelMotor = hardwareMap.get(DcMotorEx.class, LasagnaIDS.FLYWHEEL_MOTOR);
-    
-    
-
 
     motors = new DcMotorEx[]{frontLeft, frontRight, rearLeft, rearRight}; 
 
     frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     rearLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-    frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-    rearRight.setDirection(DcMotorSimple.Direction.FORWARD);
-    intakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-    flyWheelMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+    frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
+    rearRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
 
     for(DcMotorEx motor : motors ){
         motor.setPower(0.0);
@@ -77,25 +68,25 @@ public void initializeIntakeMotors(HardwareMap hardwareMap){
 }
 
 public void initializeLaunchPadMotors(HardwareMap hardwareMap){
-    liftMotor = hardwareMap.get(DcMotorEx.class, LasagnaIDS.LIFT_MOTOR);
-    flyWheelMotor = hardwareMap.get(DcMotorEx.class, LasagnaIDS.FLYWHEEL_MOTOR);
+//    liftMotor = hardwareMap.get(DcMotorEx.class, LasagnaIDS.LIFT_MOTOR);
+//    //flyWheelMotor = hardwareMap.get(DcMotorEx.class, LasagnaIDS.FLYWHEEL_MOTOR);
+//
+//    liftMotor.setPower(0.0);
+//    liftMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+//    liftMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
-    liftMotor.setPower(0.0);
-    liftMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-    liftMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-
-    flyWheelMotor.setPower(0.0);
-    flyWheelMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-    flyWheelMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+    //flyWheelMotor.setPower(0.0);
+    //flyWheelMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+    //flyWheelMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 }
 
 public void initializeServos(HardwareMap hardwareMap){
-    pushServo = hardwareMap.get(Servo.class, LasagnaIDS.PUSH_SERVO);
-    clawServo = hardwareMap.get(Servo.class, LasagnaIDS.CLAW_SERVO);
-    armServo = hardwareMap.get(Servo.class, LasagnaIDS.ARM_SERVO);
-
-    pushServo.setPosition(0.0);
-    clawServo.setPosition(0.0);
-    armServo.setPosition(0.0);
+//    pushServo = hardwareMap.get(Servo.class, LasagnaIDS.PUSH_SERVO);
+//    clawServo = hardwareMap.get(Servo.class, LasagnaIDS.CLAW_SERVO);
+//    armServo = hardwareMap.get(Servo.class, LasagnaIDS.ARM_SERVO);
+//
+//    pushServo.setPosition(0.0);
+//    clawServo.setPosition(0.0);
+//    armServo.setPosition(0.0);
 }
 }
