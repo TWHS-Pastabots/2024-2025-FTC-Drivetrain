@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Hardware;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -13,16 +14,13 @@ public class LasagnaHardware {
     public DcMotorEx frontRight = null;
     public DcMotorEx rearRight = null;
 
-   // public DcMotorEx flyWheelMotor = null;
+    public DcMotorEx flyWheelMotor = null;
 
     public DcMotorEx intakeMotor = null;
-    //public DcMotorEx flyWheelMotor = null;
 //    public DcMotorEx liftMotor = null;
 //
 //    public Servo pushServo = null;
-//    public Servo clawServo = null;
-//    public Servo armServo = null;
-
+    public DcMotorEx armMotor = null;
 
     public DcMotorEx[] motors;
 
@@ -65,19 +63,26 @@ public void initializeIntakeMotors(HardwareMap hardwareMap){
     intakeMotor.setPower(0.0);
     intakeMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
     intakeMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+
+    armMotor = hardwareMap.get(DcMotorEx.class, LasagnaIDS.ARM_MOTOR);
+
+    armMotor.setPower(0.0);
+    armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    armMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 }
 
 public void initializeLaunchPadMotors(HardwareMap hardwareMap){
+    flyWheelMotor = hardwareMap.get(DcMotorEx.class, LasagnaIDS.FLYWHEEL_MOTOR);
+    flyWheelMotor.setPower(0.0);
+    flyWheelMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+    flyWheelMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+
 //    liftMotor = hardwareMap.get(DcMotorEx.class, LasagnaIDS.LIFT_MOTOR);
-//    //flyWheelMotor = hardwareMap.get(DcMotorEx.class, LasagnaIDS.FLYWHEEL_MOTOR);
-//
 //    liftMotor.setPower(0.0);
 //    liftMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 //    liftMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
-    //flyWheelMotor.setPower(0.0);
-    //flyWheelMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-    //flyWheelMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+
 }
 
 public void initializeServos(HardwareMap hardwareMap){

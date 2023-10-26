@@ -33,7 +33,8 @@ public class Lasagna extends OpMode {
     public void loop(){
         drive();
         intake();
-        //launch();
+        launch();
+        arm();
         //lift();
         //arm();
     }
@@ -111,29 +112,43 @@ public class Lasagna extends OpMode {
         
         if(gamepad2.square){
             hardware.intakeMotor.setPower(intakeOn);
-
         }
         else{
             hardware.intakeMotor.setPower(intakeOff);
         }
     }
 
-  //  public void launch(){
-    //    double flyWheelOn = .75;
-      //  double flyWheelOff = 0.0;
+    public void launch(){
+        double flyWheelOn = 1;
+        double flyWheelOff = 0.0;
 
-        //if(gamepad2.triangle && buttonTime.time() >= 500){
-          //  hardware.flyWheelMotor.setPower(flyWheelOn);
-            //buttonTime.reset();
-        //}
-        //else{
-         //   hardware.flyWheelMotor.setPower(flyWheelOff);
-       // }
+        if(gamepad2.left_trigger>0){
+            hardware.flyWheelMotor.setPower(flyWheelOn);
+        }
+        else{
+            hardware.flyWheelMotor.setPower(flyWheelOff);
+        }
+        if(gamepad2.right_trigger > 0){
 
-    //}
+        }
+
+    }
 
 //    public void lift(){
 //        double y = gamepad2.left_stick_y *.1;
 //        hardware.liftMotor.setPower(y);
 //    }
+    public void arm(){
+        double on = .5;
+        double off = 0.0;
+        if(gamepad1.square){
+            hardware.armMotor.setPower(on);
+        }
+        else if(gamepad1.circle){
+            hardware.armMotor.setPower(-1*on);
+        }
+        else{
+            hardware.armMotor.setPower(off);
+        }
+    }
 }
