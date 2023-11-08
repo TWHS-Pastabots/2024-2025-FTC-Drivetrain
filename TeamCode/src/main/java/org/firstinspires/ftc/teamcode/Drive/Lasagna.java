@@ -36,7 +36,6 @@ public class Lasagna extends OpMode {
         launch();
         arm();
         //lift();
-        //arm();
     }
 
     public void drive() {
@@ -121,6 +120,7 @@ public class Lasagna extends OpMode {
     public void launch(){
         double flyWheelOn = 1;
         double flyWheelOff = 0.0;
+        boolean pushServo;
 
         if(gamepad2.left_trigger>0){
             hardware.flyWheelMotor.setPower(flyWheelOn);
@@ -128,8 +128,17 @@ public class Lasagna extends OpMode {
         else{
             hardware.flyWheelMotor.setPower(flyWheelOff);
         }
-        if(gamepad2.right_trigger > 0){
-
+        if(gamepad2.right_trigger>0){
+            pushServo = true;
+        }
+        else{
+            pushServo = false;
+        }
+        if(pushServo){
+            hardware.pushServo.setPosition(1.0);
+        }
+        else{
+            hardware.pushServo.setPosition(0.5);
         }
 
     }
@@ -139,7 +148,8 @@ public class Lasagna extends OpMode {
 //        hardware.liftMotor.setPower(y);
 //    }
     public void arm(){
-        double on = .5;
+        double on = .25;
+        double hold = .17;
         double off = 0.0;
         if(gamepad1.square){
             hardware.armMotor.setPower(on);
@@ -147,6 +157,8 @@ public class Lasagna extends OpMode {
         else if(gamepad1.circle){
             hardware.armMotor.setPower(-1*on);
         }
+        else if(gamepad1.cross)
+            hardware.armMotor.setPower(hold);
         else{
             hardware.armMotor.setPower(off);
         }
