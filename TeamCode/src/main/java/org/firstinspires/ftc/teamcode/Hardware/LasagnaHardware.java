@@ -16,7 +16,7 @@ public class LasagnaHardware {
     public DcMotorEx flyWheelMotor = null;
 
     public DcMotorEx intakeMotor = null;
-//    public DcMotorEx liftMotor = null;
+    public DcMotorEx liftMotor = null;
     public Servo pushServo = null;
     public DcMotorEx armMotor = null;
 
@@ -75,10 +75,10 @@ public void initializeLaunchPadMotors(HardwareMap hardwareMap){
     flyWheelMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     flyWheelMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
-//    liftMotor = hardwareMap.get(DcMotorEx.class, LasagnaIDS.LIFT_MOTOR);
-//    liftMotor.setPower(0.0);
-//    liftMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-//    liftMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+    liftMotor = hardwareMap.get(DcMotorEx.class, LasagnaIDS.LIFT_MOTOR);
+    liftMotor.setPower(0.0);
+    liftMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+    liftMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
 
 }

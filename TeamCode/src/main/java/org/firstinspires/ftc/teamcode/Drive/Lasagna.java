@@ -90,11 +90,11 @@ public class Lasagna extends OpMode {
             rightFrontPower = -1;
         }
 
-        if(gamepad1.square && currentMode == FAST_MODE && buttonTime.time() >= 500) {
+        if(gamepad1.left_bumper && currentMode == FAST_MODE && buttonTime.time() >= 500) {
             currentMode = PREC_MODE;
             buttonTime.reset();
         }
-        else if(gamepad1.square && currentMode == PREC_MODE && buttonTime.time() >= 500) {
+        else if(gamepad1.left_bumper && currentMode == PREC_MODE && buttonTime.time() >= 500) {
             currentMode = FAST_MODE;
             buttonTime.reset();
         }
@@ -143,10 +143,10 @@ public class Lasagna extends OpMode {
 
     }
 
-//    public void lift(){
-//        double y = gamepad2.left_stick_y *.1;
-//        hardware.liftMotor.setPower(y);
-//    }
+    public void lift(){
+        double y = gamepad2.left_stick_y *.1;
+        hardware.liftMotor.setPower(y);
+    }
     public void arm(){
         double on = .25;
         double hold = .17;
