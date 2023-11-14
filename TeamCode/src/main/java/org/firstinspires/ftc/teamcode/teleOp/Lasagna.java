@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Drive;
+package org.firstinspires.ftc.teamcode.teleOp;
 
 import org.firstinspires.ftc.teamcode.Hardware.LasagnaHardware;
 
@@ -35,7 +35,7 @@ public class Lasagna extends OpMode {
         intake();
         launch();
         arm();
-        //lift();
+        lift();
     }
 
     public void drive() {
@@ -65,15 +65,15 @@ public class Lasagna extends OpMode {
 
         if(gamepad1.dpad_left){
             leftFrontPower = -1;
-            rightRearPower = 1;
+            rightRearPower = -1;
             leftRearPower = 1;
-            rightFrontPower = -1;
+            rightFrontPower = 1;
         }
         else if(gamepad1.dpad_right){
             leftFrontPower = 1;
-            rightRearPower = -1;
+            rightRearPower = 1;
             leftRearPower = -1;
-            rightFrontPower = 1;
+            rightFrontPower = -1;
         }
         else if (gamepad1.dpad_up)
         {
@@ -144,7 +144,7 @@ public class Lasagna extends OpMode {
     }
 
     public void lift(){
-        double y = gamepad2.left_stick_y *.1;
+        double y = -gamepad2.left_stick_y *.5;
         hardware.liftMotor.setPower(y);
     }
     public void arm(){
