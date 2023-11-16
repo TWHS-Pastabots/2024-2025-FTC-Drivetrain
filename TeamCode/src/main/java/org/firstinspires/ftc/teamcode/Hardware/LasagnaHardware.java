@@ -65,6 +65,7 @@ public void initializeIntakeMotors(HardwareMap hardwareMap){
     armMotor = hardwareMap.get(DcMotorEx.class, LasagnaIDS.ARM_MOTOR);
 
     armMotor.setPower(0.0);
+    armMotor.setPositionPIDFCoefficients(1.0);
     armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     armMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 }
