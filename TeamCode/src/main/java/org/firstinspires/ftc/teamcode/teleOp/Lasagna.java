@@ -4,6 +4,8 @@ import org.firstinspires.ftc.teamcode.Hardware.LasagnaHardware;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp (name = "Lasagna")
@@ -12,6 +14,7 @@ public class Lasagna extends OpMode {
    
     public static final double FAST_MODE = .9;
     public static final double PREC_MODE = .45;
+    private int holdPosition = -550;
 
     double currentMode;
     ElapsedTime buttonTime = null;
@@ -149,18 +152,36 @@ public class Lasagna extends OpMode {
     }
     public void arm(){
         double on = .25;
-        double hold = .17;
         double off = 0.0;
+        boolean hold = false;
+
         if(gamepad1.square){
+            hardware.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             hardware.armMotor.setPower(on);
+            hold = false;
         }
         else if(gamepad1.circle){
+            hardware.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             hardware.armMotor.setPower(-1*on);
+            hold = false;
         }
-        else if(gamepad1.cross)
-            hardware.armMotor.setPower(hold);
+        else if(gamepad1.cross) {
+            moveArm();
+            hold = true;
+        }
         else{
-            hardware.armMotor.setPower(off);
+            if(hold == false)
+                hardware.armMotor.setPower(off);
+
+        telemetry.addData("Arm Position",hardware.armMotor.getCurrentPosition());
+        telemetry.update();
         }
     }
+    public void moveArm(){
+        hardware.armMotor.setTargetPosition(holdPosition);
+        hardware.armMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        hardware.armMotor.setPower(1.0);
+    }
+
+
 }
