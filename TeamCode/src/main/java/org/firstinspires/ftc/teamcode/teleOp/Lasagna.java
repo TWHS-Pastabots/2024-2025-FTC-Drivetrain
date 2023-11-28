@@ -39,6 +39,15 @@ public class Lasagna extends OpMode {
         launch();
         arm();
         lift();
+        telemetry();
+    }
+    public void telemetry()
+    {
+        telemetry.addData("Left front", hardware.frontLeft.getVelocity());
+        telemetry.addData("right front", hardware.frontRight.getVelocity());
+        telemetry.addData("right back", hardware.rearRight.getVelocity());
+        telemetry.addData("left back", hardware.rearLeft.getVelocity());
+
     }
 
     public void drive() {
@@ -173,8 +182,8 @@ public class Lasagna extends OpMode {
             if(hold == false)
                 hardware.armMotor.setPower(off);
 
-        telemetry.addData("Arm Position",hardware.armMotor.getCurrentPosition());
-        telemetry.update();
+       // telemetry.addData("Arm Position",hardware.armMotor.getCurrentPosition());
+        //telemetry.update();
         }
     }
     public void moveArm(){
