@@ -1,11 +1,14 @@
-package org.firstinspires.ftc.teamcode.autonomous;
+package org.firstinspires.ftc.teamcode.Autonomous;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.hardware.Hardware;
+import org.firstinspires.ftc.teamcode.Hardware.LasagnaHardware;
+import org.firstinspires.ftc.teamcode.Hardware.LasagnaIDS;
 
 public class AutoUtil {
-    private Hardware hardware;
-    public AutoUtil(Hardware hardware){
+    private LasagnaHardware hardware;
+    public AutoUtil(LasagnaHardware hardware){
         this.hardware = hardware;
     }
     public void waitTime(int waitTime){
@@ -16,20 +19,23 @@ public class AutoUtil {
     public void flywheelPower(double power){
         hardware.flyWheelMotor.setPower(power);
     }
-    public void launch(double power){
+    public void clearServo(){
+        hardware.pushServo.setPosition(0.5);
+    }
+    public void launch(){
         hardware.pushServo.setPosition(1.0);
-        wait(50);
+        waitTime(500);
         hardware.pushServo.setPosition(0.5);
         hardware.flyWheelMotor.setPower(0.0);
     }
     public void intake(int intakeTime){
         ElapsedTime time = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
         time.reset();
-        while(iTime.time() < intakeTime){}
+        while(time.time() < intakeTime){}
     }
     public void setLaunchAngle(int pose){
         hardware.liftMotor.setTargetPosition(pose);
-        hardware.liftMotor.RunMode(DcMotorEx.setMode.RUN_TO_POSITION);
+        hardware.liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         hardware.liftMotor.setPower(0.4);
     }
 

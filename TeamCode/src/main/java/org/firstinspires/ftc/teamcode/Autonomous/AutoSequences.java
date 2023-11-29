@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.autonomous;
+package org.firstinspires.ftc.teamcode.Autonomous;
 import org.firstinspires.ftc.teamcode.drive.*;
-import org.firstinspires.ftc.teamcode.hardware.Hardware;
+import org.firstinspires.ftc.teamcode.Hardware.LasagnaHardware;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -35,9 +35,12 @@ public class AutoSequences {
     Trajectory redPark2Trajectory;
     Trajectory redPark3Trajectory;
 
+    Trajectory clearWallRed;
+    Trajectory clearWallBlue;
+
     //Blue Pos. + Vec.2D
     Pose2d blueStartPose = new Pose2d(-64, -48, Math.toRadians(90));
-
+    Vector2d blueShoot = new Vector2d(-40, -40);
     Vector2d bluePark1 = new Vector2d(32, -36);
     Vector2d bluePark2 = new Vector2d(8, -60);
     Vector2d bluePark3 = new Vector2d(-12, -36);
@@ -50,48 +53,66 @@ public class AutoSequences {
     Vector2d redPark2 = new Vector2d(10, 60);
     Vector2d redPark3 = new Vector2d(-12, 36);
 
-    public AutonSequences(HardwareMap hardwareMap, AutoUtil util){
-        this.util = util;
-        drive = new SampleMecanumDrive(HardwareMap);
+    Vector2d offWallRed = new Vector2d(-58,40);
+    Vector2d offWallBlue = new Vector2d(-58,-40);
 
-        redFirstShootTrajectory = drive.trajectoryBuilder((redStartPose))
+    public AutoSequences(HardwareMap hardwareMap, AutoUtil util){
+        this.util = util;
+        drive = new SampleMecanumDrive(hardwareMap);
+
+        clearWallRed = drive.trajectoryBuilder(redStartPose)
+                .splineTo(offWallRed, Math.toRadians(0))
+                .build();
+        redFirstShootTrajectory = drive.trajectoryBuilder( new Pose2d(offWallRed, Math.toRadians(0)))
         .splineTo(redShoot, Math.toRadians(-15))
         .build();
-        redPark1 = drive.trajectoryBuilder(new Pose2d(redShoot, Math.toRadians(-15)))
+        redPark1Trajectory = drive.trajectoryBuilder(new Pose2d(redShoot, Math.toRadians(-30)))
         .splineTo(redPark1, Math.toRadians(90))
         .build();
-        redPark2 = drive.trajectoryBuilder(new Pose2d(redShoot, Math.toRadians(-15)))
+        redPark2Trajectory = drive.trajectoryBuilder(new Pose2d(redShoot, Math.toRadians(-30)))
         .splineTo(redPark2, Math.toRadians(90))
         .build();
-        redPark3 = drive.trajectoryBuilder(new Pose2d(redShoot, Math.toRadians(-15)))
+        redPark3Trajectory = drive.trajectoryBuilder(new Pose2d(redShoot, Math.toRadians(-30)))
         .splineTo(redPark3, Math.toRadians(90))
         .build();
 
-        blueFirstShootTrajectory = drive.trajectoryBuilder((blueStartPose))
+        clearWallBlue = drive.trajectoryBuilder(blueStartPose)
+                .splineTo(offWallBlue, Math.toRadians(0))
+                .build();
+        blueFirstShootTrajectory = drive.trajectoryBuilder(new Pose2d(offWallBlue, Math.toRadians(0)))
         .splineTo(blueShoot, Math.toRadians(-15))
         .build();
-        bluePark1 = drive.trajectoryBuilder(new Pose2d(blueShoot, Math.toRadians(-15)))
+        bluePark1Trajectory = drive.trajectoryBuilder(new Pose2d(blueShoot, Math.toRadians(30)))
         .splineTo(bluePark1, Math.toRadians(90))
         .build();
-        bluePark2 = drive.trajectoryBuilder(new Pose2d(blueShoot, Math.toRadians(-15)))
+        bluePark2Trajectory = drive.trajectoryBuilder(new Pose2d(blueShoot, Math.toRadians(30)))
         .splineTo(bluePark2, Math.toRadians(90))
         .build();
-        bluePark3 = drive.trajectoryBuilder(new Pose2d(blueShoot, Math.toRadians(-15)))
+        bluePark3Trajectory = drive.trajectoryBuilder(new Pose2d(blueShoot, Math.toRadians(30)))
         .splineTo(bluePark3, Math.toRadians(90))
         .build();
+
     }
     
     public void redshort1(){
-        drive.setPoseEsitmate(redStartPose);
+        drive.setPoseEstimate(redStartPose);
+        util.clearServo();
+        drive.followTrajectory(clearWallRed);
+        drive.followTrajectory(redFirstShootTrajectory);
 
-        util.setLaunchAngle(midAng);
         util.flywheelPower(midVelo);
+        util.waitTime(1500);
+        util.launch();
+        util.waitTime(500);
+
+        util.flywheelPower(0.0);
+        drive.followTrajectory(redPark1Trajectory);
 
     }
     public void redshort2(){
-        drive.setPoseEsitmate(redStartPose);
+        drive.setPoseEstimate(redStartPose);
     }
     public void redshort3(){
-        drive.setPoseEsitmate(redStartPose);
+        drive.setPoseEstimate(redStartPose);
     }
 }
