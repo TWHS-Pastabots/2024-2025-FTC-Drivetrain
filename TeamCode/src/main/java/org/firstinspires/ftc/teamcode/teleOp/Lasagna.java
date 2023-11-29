@@ -175,12 +175,13 @@ public class Lasagna extends OpMode {
             hold = false;
         }
         else if(gamepad1.cross) {
-            moveArm();
             hold = true;
         }
         else{
             if(hold == false)
                 hardware.armMotor.setPower(off);
+            else
+                moveArm();
 
        // telemetry.addData("Arm Position",hardware.armMotor.getCurrentPosition());
         //telemetry.update();
