@@ -33,10 +33,13 @@ public class AutoUtil {
         time.reset();
         while(time.time() < intakeTime){}
     }
-    public void setLaunchAngle(int pose){
-        hardware.liftMotor.setTargetPosition(pose);
-        hardware.liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        hardware.liftMotor.setPower(0.4);
+    public void setLaunchAngle(int time){
+        ElapsedTime atime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+        atime.reset();
+        if(atime.time() < time){
+            hardware.liftMotor.setPower(0.8);
+        }
+        hardware.liftMotor.setPower(0.0);
     }
 
 }

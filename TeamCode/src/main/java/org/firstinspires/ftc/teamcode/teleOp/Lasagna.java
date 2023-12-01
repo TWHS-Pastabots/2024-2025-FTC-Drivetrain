@@ -43,10 +43,10 @@ public class Lasagna extends OpMode {
     }
     public void telemetry()
     {
-        telemetry.addData("Left front", hardware.frontLeft.getVelocity());
-        telemetry.addData("right front", hardware.frontRight.getVelocity());
-        telemetry.addData("right back", hardware.rearRight.getVelocity());
-        telemetry.addData("left back", hardware.rearLeft.getVelocity());
+        //telemetry.addData("Left front", hardware.frontLeft.getVelocity());
+        //telemetry.addData("right front", hardware.frontRight.getVelocity());
+        //telemetry.addData("right back", hardware.rearRight.getVelocity());
+        //telemetry.addData("left back", hardware.rearLeft.getVelocity());
 
     }
 
@@ -158,6 +158,12 @@ public class Lasagna extends OpMode {
     public void lift(){
         double y = -gamepad2.left_stick_y *.5;
         hardware.liftMotor.setPower(y);
+        if(gamepad2.triangle){
+            hardware.liftMotor.setTargetPosition(30);
+            hardware.liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            hardware.liftMotor.setPower(-1.0);
+            telemetry.addLine("PID ACTIVE!");
+        }
     }
     public void arm(){
         double on = .25;
@@ -176,15 +182,14 @@ public class Lasagna extends OpMode {
         }
         else if(gamepad1.cross) {
             hold = true;
+            moveArm();
         }
         else{
             if(hold == false)
                 hardware.armMotor.setPower(off);
-            else
-                moveArm();
 
-       // telemetry.addData("Arm Position",hardware.armMotor.getCurrentPosition());
-        //telemetry.update();
+        telemetry.addData("Arm Position",hardware.liftMotor.getCurrentPosition());
+        telemetry.update();
         }
     }
     public void moveArm(){

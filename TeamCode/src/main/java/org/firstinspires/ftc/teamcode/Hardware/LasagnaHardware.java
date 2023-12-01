@@ -72,12 +72,15 @@ public void initializeIntakeMotors(HardwareMap hardwareMap){
 
 public void initializeLaunchPadMotors(HardwareMap hardwareMap){
     flyWheelMotor = hardwareMap.get(DcMotorEx.class, LasagnaIDS.FLYWHEEL_MOTOR);
+
     flyWheelMotor.setPower(0.0);
     flyWheelMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     flyWheelMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
     liftMotor = hardwareMap.get(DcMotorEx.class, LasagnaIDS.LIFT_MOTOR);
+
     liftMotor.setPower(0.0);
+    liftMotor.setPositionPIDFCoefficients(1.0);
     liftMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     liftMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 

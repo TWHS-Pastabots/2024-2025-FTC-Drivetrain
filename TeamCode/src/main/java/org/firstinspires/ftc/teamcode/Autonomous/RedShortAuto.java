@@ -135,6 +135,14 @@ import java.util.ArrayList;
         Orientation rot = Orientation.getOrientation(detection.pose.R, AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.DEGREES);
 
         telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
+
+        if(tagOfIntrest.id == one )
+            telemetry.addLine("Tag 1");
+        if(tagOfIntrest.id == two)
+            telemetry.addLine("Tag 2");
+        if(tagOfIntrest.id == three)
+            telemetry.addLine("Tag 3");
+
         telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
         telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y*FEET_PER_METER));
         telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z*FEET_PER_METER));

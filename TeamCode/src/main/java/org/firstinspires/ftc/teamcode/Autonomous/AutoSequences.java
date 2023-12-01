@@ -1,4 +1,6 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+
 import org.firstinspires.ftc.teamcode.drive.*;
 import org.firstinspires.ftc.teamcode.Hardware.LasagnaHardware;
 
@@ -18,9 +20,9 @@ public class AutoSequences {
     double midVelo = 0.75;
     double highVelo = 1.0;
 
-    int lowAng = 0;
-    int midAng = 0;
-    int highAng = 0;
+    int lowAng = 100;
+    int midAng = 1000;
+    int highAng = 60;
 
     Trajectory blueFirstShootTrajectory;
     
@@ -47,24 +49,24 @@ public class AutoSequences {
 
     //Red Pos. + Vec.2D
     Pose2d redStartPose = new Pose2d(-64, 48, Math.toRadians(90));
-    Vector2d redShoot = new Vector2d(-40, 40);
+    Vector2d redShoot = new Vector2d(-35, 35);
 
-    Vector2d redPark1 = new Vector2d(34, 36);
+    Vector2d redPark1 = new Vector2d(36, 36);
     Vector2d redPark2 = new Vector2d(10, 60);
     Vector2d redPark3 = new Vector2d(-12, 36);
 
     Vector2d offWallRed = new Vector2d(-58,40);
-    Vector2d offWallBlue = new Vector2d(-58,-40);
+    Vector2d offWallBlue = new Vector2d(-50,-40);
 
     public AutoSequences(HardwareMap hardwareMap, AutoUtil util){
         this.util = util;
         drive = new SampleMecanumDrive(hardwareMap);
 
         clearWallRed = drive.trajectoryBuilder(redStartPose)
-                .splineTo(offWallRed, Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(offWallRed, 90), Math.toRadians(0))
                 .build();
         redFirstShootTrajectory = drive.trajectoryBuilder( new Pose2d(offWallRed, Math.toRadians(0)))
-        .splineTo(redShoot, Math.toRadians(-15))
+        .splineToSplineHeading(new Pose2d(redShoot, Math.toRadians(-30)), Math.toRadians(-90))
         .build();
         redPark1Trajectory = drive.trajectoryBuilder(new Pose2d(redShoot, Math.toRadians(-30)))
         .splineTo(redPark1, Math.toRadians(90))
@@ -94,7 +96,7 @@ public class AutoSequences {
 
     }
     
-    public void redshort1(){
+    public void redshort2(){
         drive.setPoseEstimate(redStartPose);
         util.clearServo();
         drive.followTrajectory(clearWallRed);
@@ -106,11 +108,13 @@ public class AutoSequences {
         util.waitTime(500);
 
         util.flywheelPower(0.0);
-        drive.followTrajectory(redPark1Trajectory);
+        drive.followTrajectory(redPark2Trajectory);
 
     }
-    public void redshort2(){
+    public void redshort1(){
         drive.setPoseEstimate(redStartPose);
+        util.setLaunchAngle(midAng);
+        util.waitTime(5000);
     }
     public void redshort3(){
         drive.setPoseEstimate(redStartPose);
