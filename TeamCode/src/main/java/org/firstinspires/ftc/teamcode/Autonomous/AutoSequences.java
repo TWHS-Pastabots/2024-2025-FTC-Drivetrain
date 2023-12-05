@@ -20,8 +20,8 @@ public class AutoSequences {
     double midVelo = 0.75;
     double highVelo = 1.0;
 
-    int lowAng = 100;
-    int midAng = 1000;
+    int lowAng = 0;
+    int midAng = 30;
     int highAng = 60;
 
     Trajectory blueFirstShootTrajectory;
@@ -95,7 +95,11 @@ public class AutoSequences {
         .build();
 
     }
-    
+    public void redshort1(){
+        drive.setPoseEstimate(redStartPose);
+        util.setLaunchAngle(midAng);
+        util.waitTime(5000);
+    }
     public void redshort2(){
         drive.setPoseEstimate(redStartPose);
         util.clearServo();
@@ -111,12 +115,32 @@ public class AutoSequences {
         drive.followTrajectory(redPark2Trajectory);
 
     }
-    public void redshort1(){
+    
+    public void redshort3(){
+        drive.setPoseEstimate(redStartPose);
+    }
+    public void blueshort1(){
         drive.setPoseEstimate(redStartPose);
         util.setLaunchAngle(midAng);
         util.waitTime(5000);
     }
-    public void redshort3(){
+    public void blueshort2(){
+        drive.setPoseEstimate(redStartPose);
+        util.clearServo();
+        drive.followTrajectory(clearWallRed);
+        drive.followTrajectory(redFirstShootTrajectory);
+
+        util.flywheelPower(midVelo);
+        util.waitTime(1500);
+        util.launch();
+        util.waitTime(500);
+
+        util.flywheelPower(0.0);
+        drive.followTrajectory(redPark2Trajectory);
+
+    }
+    
+    public void blueshort3(){
         drive.setPoseEstimate(redStartPose);
     }
 }
