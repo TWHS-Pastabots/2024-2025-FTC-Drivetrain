@@ -28,10 +28,21 @@ public class AutoUtil {
         hardware.pushServo.setPosition(0.5);
         hardware.flyWheelMotor.setPower(0.0);
     }
-    public void intake(int intakeTime){
-        ElapsedTime time = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
-        time.reset();
-        while(time.time() < intakeTime){}
+    public void launch(int num){
+        for(int i = num; i>0; i--){
+            hardware.pushServo.setPosition(1.0);
+            waitTime(500);
+            hardware.pushServo.setPosition(0.5);
+            waitTime(2500);
+        }
+        hardware.flyWheelMotor.setPower(0.0);
+    }
+    public void intake(int goYN){
+       if(goYN % 2 == 0){
+           hardware.intakeMotor.setPower(-1);
+       }
+       else
+           hardware.intakeMotor.setPower(0.0);
     }
     public void setLaunchAngle(int time){
         ElapsedTime atime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
