@@ -16,15 +16,16 @@ public class AutoSequences {
     SampleMecanumDrive drive;
     AutoUtil util;
 
-    double lowVelo = 0.5;
-    double midVelo = 0.75;
+    double lowVelo = 0.8;
+    double midVelo = 0.95;
     double highVelo = 1.0;
 
     int lowAng = 0;
     int midAng = 30;
     int highAng = 60;
 
-    Trajectory blueFirstShootTrajectory;
+    Trajectory blueShoot1Traj;
+    Trajectory blueShoot2Traj;
     
     //Blue Traj.
     Trajectory bluePark1Trajectory;
@@ -42,9 +43,10 @@ public class AutoSequences {
 
     //Blue Pos. + Vec.2D
     Pose2d blueStartPose = new Pose2d(-64, -48, Math.toRadians(90));
-    Vector2d blueShoot = new Vector2d(-40, -40);
-    Vector2d bluePark1 = new Vector2d(32, -36);
-    Vector2d bluePark2 = new Vector2d(8, -60);
+    Vector2d blueShoot1 = new Vector2d(-55, -45);
+    Vector2d blueShoot2 = new Vector2d(-35, -25);
+    Vector2d bluePark1 = new Vector2d(32, -37);
+    Vector2d bluePark2 = new Vector2d(10, -59);
     Vector2d bluePark3 = new Vector2d(-12, -36);
 
     //Red Pos. + Vec.2D
@@ -56,7 +58,6 @@ public class AutoSequences {
     Vector2d redPark3 = new Vector2d(-12, 36);
 
     Vector2d offWallRed = new Vector2d(-58,40);
-    Vector2d offWallBlue = new Vector2d(-50,-40);
 
     public AutoSequences(HardwareMap hardwareMap, AutoUtil util){
         this.util = util;
@@ -78,19 +79,19 @@ public class AutoSequences {
         .splineTo(redPark3, Math.toRadians(90))
         .build();
 
-        clearWallBlue = drive.trajectoryBuilder(blueStartPose)
-                .splineTo(offWallBlue, Math.toRadians(0))
+        blueShoot1Traj = drive.trajectoryBuilder(blueStartPose)
+                .splineToSplineHeading(new Pose2d(blueShoot1, Math.toRadians(30)), Math.toRadians(30))
                 .build();
-        blueFirstShootTrajectory = drive.trajectoryBuilder(new Pose2d(offWallBlue, Math.toRadians(0)))
-        .splineTo(blueShoot, Math.toRadians(-15))
+        blueShoot2Traj = drive.trajectoryBuilder(blueStartPose)
+        .splineToSplineHeading(new Pose2d(blueShoot2,Math.toRadians(10)), Math.toRadians(-15))
         .build();
-        bluePark1Trajectory = drive.trajectoryBuilder(new Pose2d(blueShoot, Math.toRadians(30)))
-        .splineTo(bluePark1, Math.toRadians(90))
+        bluePark1Trajectory = drive.trajectoryBuilder(new Pose2d(blueShoot1, Math.toRadians(30)))
+        .splineTo(bluePark1, Math.toRadians(0))
         .build();
-        bluePark2Trajectory = drive.trajectoryBuilder(new Pose2d(blueShoot, Math.toRadians(30)))
-        .splineTo(bluePark2, Math.toRadians(90))
+        bluePark2Trajectory = drive.trajectoryBuilder(new Pose2d(blueShoot2, Math.toRadians(10)))
+        .splineTo(bluePark2, Math.toRadians(-90))
         .build();
-        bluePark3Trajectory = drive.trajectoryBuilder(new Pose2d(blueShoot, Math.toRadians(30)))
+        bluePark3Trajectory = drive.trajectoryBuilder(new Pose2d(blueShoot2, Math.toRadians(30)))
         .splineTo(bluePark3, Math.toRadians(90))
         .build();
 
@@ -107,7 +108,7 @@ public class AutoSequences {
         drive.followTrajectory(redFirstShootTrajectory);
 
         util.flywheelPower(midVelo);
-        util.waitTime(1500);
+        util.waitTime(2000);
         util.launch();
         util.waitTime(500);
 
@@ -120,24 +121,23 @@ public class AutoSequences {
         drive.setPoseEstimate(redStartPose);
     }
     public void blueshort1(){
-        drive.setPoseEstimate(redStartPose);
-        util.setLaunchAngle(midAng);
-        util.waitTime(5000);
-    }
-    public void blueshort2(){
-        drive.setPoseEstimate(redStartPose);
-        util.clearServo();
-        drive.followTrajectory(clearWallRed);
-        drive.followTrajectory(redFirstShootTrajectory);
-
+        drive.setPoseEstimate(blueStartPose);
+        drive.followTrajectory(blueShoot1Traj);
         util.flywheelPower(midVelo);
         util.waitTime(1500);
         util.launch();
         util.waitTime(500);
+        drive.followTrajectory(bluePark1Trajectory);
+    }
+    public void blueshort2(){
+        drive.setPoseEstimate(blueStartPose);
+        drive.followTrajectory(blueShoot2Traj);
+        util.flywheelPower(lowVelo);
+        util.waitTime(2000);
+        util.launch();
+        util.waitTime(500);
 
-        util.flywheelPower(0.0);
-        drive.followTrajectory(redPark2Trajectory);
-
+        drive.followTrajectory(bluePark2Trajectory);
     }
     
     public void blueshort3(){
