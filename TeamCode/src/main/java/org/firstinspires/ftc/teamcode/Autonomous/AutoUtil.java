@@ -37,8 +37,8 @@ public class AutoUtil {
         }
         hardware.flyWheelMotor.setPower(0.0);
     }
-    public void intake(int goYN){
-       if(goYN % 2 == 0){
+    public void intake(boolean yn){
+       if(yn){
            hardware.intakeMotor.setPower(-1);
        }
        else
