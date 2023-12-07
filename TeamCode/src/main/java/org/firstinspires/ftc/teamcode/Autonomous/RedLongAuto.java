@@ -114,12 +114,12 @@ public class RedLongAuto extends LinearOpMode {
         if(tagOfIntrest == null || tagOfIntrest.id == one){
             telemetry.addLine("Position 1");
             telemetry.update();
-            sequences.redLong1();
+            sequences.redshort1();
         }
         else if(tagOfIntrest.id == two){
             telemetry.addLine("Position 2");
             telemetry.update();
-            sequences.redshort2();
+            sequences.redLong2();
         }
         else if(tagOfIntrest.id == three){
             telemetry.addLine("Position 3");

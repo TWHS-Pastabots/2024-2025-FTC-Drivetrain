@@ -14,7 +14,7 @@ public class Lasagna extends OpMode {
    
     public static final double FAST_MODE = .9;
     public static final double PREC_MODE = .45;
-    private int holdPosition = -550;
+    private int holdPosition = -530;
 
     double currentMode;
     ElapsedTime buttonTime = null;

@@ -114,12 +114,12 @@ public class BlueLongAuto extends LinearOpMode {
         if(tagOfIntrest == null || tagOfIntrest.id == one){
             telemetry.addLine("Position 1");
             telemetry.update();
-            sequences.blueLong1();
+            sequences.blueLong2();
         }
         else if(tagOfIntrest.id == two){
             telemetry.addLine("Position 2");
             telemetry.update();
-            sequences.redshort2();
+            sequences.blueLong2();
         }
         else if(tagOfIntrest.id == three){
             telemetry.addLine("Position 3");
