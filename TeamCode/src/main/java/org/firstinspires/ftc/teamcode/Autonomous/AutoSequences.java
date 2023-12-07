@@ -69,7 +69,7 @@ public class AutoSequences {
     //Red Pos. + Vec.2D
     Pose2d redStartPose = new Pose2d(-64, 48, Math.toRadians(90));
     Vector2d redShoot = new Vector2d(-35, 35);
-    Vector2d redIntakeShoot1 = new Vector2d(-40, 24)
+    Vector2d redIntakeShoot1 = new Vector2d(-40, 24);
     Vector2d redIntakeShoot2 = new Vector2d(-10, 35);
 
     Vector2d redPark1 = new Vector2d(36, 36);
@@ -91,16 +91,20 @@ public class AutoSequences {
         redintake1Traj = drive.trajectoryBuilder(redStartPose)
                 .splineToSplineHeading(new Pose2d(redIntake1, Math.toRadians(0)), Math.toRadians(0))
                 .splineTo(redIntake2, Math.toRadians(0))
+                .splineToSplineHeading(new Pose2d(redIntakeShoot1, Math.toRadians(1.878)), Math.toRadians(180))
                 .build();
         redintake2Traj = drive.trajectoryBuilder(new Pose2d(redIntake1, Math.toRadians(0)))
+                .splineToSplineHeading(new Pose2d(redIntake1, Math.toRadians(0)), Math.toRadians(0))
                 .splineTo(redIntake2, Math.toRadians(0))
-                .build();
-        redLongShoot2 = drive.trajectoryBuilder(new Pose2d(redIntake2, Math.toRadians(0)))
                 .splineToSplineHeading(new Pose2d(redIntakeShoot2, Math.toRadians(-25)), Math.toRadians(-90))
                 .build();
-        redLongShoot1 = drive.trajectoryBuilder(new Pose2d(redIntake2, Math.toRadians(0)))
-                .splineToSplineHeading()
-                .build();
+
+        // redLongShoot2 = drive.trajectoryBuilder(new Pose2d(redIntake2, Math.toRadians(0)))
+        //         .splineToSplineHeading(new Pose2d(redIntakeShoot2, Math.toRadians(-25)), Math.toRadians(-90))
+        //         .build();
+        // redLongShoot1 = drive.trajectoryBuilder(new Pose2d(redIntake2, Math.toRadians(0)))
+        //         .splineToSplineHeading()
+        //         .build();
 
         //SinglePiece Auto Red
        redFirstShootTrajectory = drive.trajectoryBuilder( new Pose2d(offWallRed, Math.toRadians(0)))
@@ -117,6 +121,10 @@ public class AutoSequences {
             .build();
 
 
+        redPark1TrajectoryL = drive.trajectoryBuilder(new Pose2d(redIntakeShoot1, Math.toRadians(1.878)))
+            .splineToSplineHeading(new Pose2d(redIntake3, Math.toRadians(120)), Math.toRadians(120))
+            .splineToSplineHeading(new Pose2d(redPark1, Math.toRadians(-90)), Math.toRadians(-90))
+            .build();
         redPark2TrajectoryL = drive.trajectoryBuilder(new Pose2d(redIntakeShoot2, Math.toRadians(-10)))
                 .splineToSplineHeading(new Pose2d(redIntake3, Math.toRadians(120)), Math.toRadians(120))
                 .splineToSplineHeading(new Pose2d(redPark2, Math.toRadians(-90)), Math.toRadians(-120))
@@ -180,6 +188,9 @@ public class AutoSequences {
     public void redshort3(){
         drive.setPoseEstimate(redStartPose);
     }
+
+    //Blue Short Autos
+
     public void blueshort1(){
         drive.setPoseEstimate(blueStartPose);
         drive.followTrajectory(blueShoot1Traj);
@@ -202,28 +213,44 @@ public class AutoSequences {
     public void blueshort3(){
         drive.setPoseEstimate(redStartPose);
     }
+
+    // Red Long Autos
+
     public void redLong1(){
         drive.setPoseEstimate(redStartPose);
         util.intake(true);
         drive.followTrajectory(redintake1Traj);
-
+        util.intake(false);
+        util.flywheelPower(midVelo);
+        util.waitTime(2500);
+        util.launch(4);
+        util.intake(true);
+        drive.followTrajectory(redPark1TrajectoryL);
+        util.waitTime(1500);
+        util.intake(false);
     }
 
     public void redLong2(){
         drive.setPoseEstimate(redStartPose);
         util.intake(true);
-        drive.followTrajectory(redintake1Traj);
-        util.waitTime(1500);
         drive.followTrajectory(redintake2Traj);
-        util.waitTime(2250);
         util.flywheelPower(midVelo);
-        drive.followTrajectory(redLongShoot2);
+        util.waitTime(2250);
         util.intake(false);
         util.launch(4);
         util.intake(true);
         drive.followTrajectory(redPark2TrajectoryL);
         util.waitTime(1000);
         util.intake(false);
+    }
+
+    public void redLong3(){
+        drive.setPoseEstimate(redStartPose);
+
+    }
+
+    public void blueLong1(){
+        drive.setPoseEstimate(blueStartPose);
     }
 
     public void blueLong2(){
@@ -240,6 +267,11 @@ public class AutoSequences {
         util.intake(true);
         drive.followTrajectory(blueIntakeTraj3);
         util.waitTime(3000);
+        util.waitTime(false);
+    }
+
+    public void blueLong3(){
+        drive.setPoseEstimate(blueStartPose);
     }
 
 }
