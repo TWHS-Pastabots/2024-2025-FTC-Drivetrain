@@ -240,7 +240,7 @@ public class AutoSequences {
         util.waitTime(2000);
         util.launch();
         util.intake(true);
-        drive.followTrajectory();
+        //drive.followTrajectory();
     }
 
     // Red Long Autos
@@ -290,7 +290,7 @@ public class AutoSequences {
     public void blueLong1(){
         drive.setPoseEstimate(blueStartPose);
         util.intake(true);
-        drive.trajectoryBuilder(blueIntakeTraj1);
+        drive.followTrajectory(blueIntakeTraj1);
         util.flywheelPower(highVelo);
         util.waitTime(3000);
         util.intake(false);
@@ -312,7 +312,7 @@ public class AutoSequences {
         util.intake(true);
         drive.followTrajectory(blueIntakeTraj3);
         util.waitTime(3000);
-        util.waitTime(false);
+        util.intake(false);
     }
 
     public void blueLong3(){
