@@ -24,7 +24,7 @@ public class AutoUtil {
     }
     public void launch(){
         hardware.pushServo.setPosition(1.0);
-        waitTime(500);
+        waitTime(300);
         hardware.pushServo.setPosition(0.5);
         hardware.flyWheelMotor.setPower(0.0);
     }

@@ -80,11 +80,11 @@ public class AutoSequences {
 
     Vector2d redPark1 = new Vector2d(36, 36);
     Vector2d redPark2 = new Vector2d(9, 60);
-    Vector2d redPark3 = new Vector2d(-20, 36);
+    Vector2d redPark3 = new Vector2d(-16, 38);
 
     Vector2d redIntake1 = new Vector2d(-45, 72);
     Vector2d redIntake2 = new Vector2d(-20, 72);
-    Vector2d redIntake3 = new Vector2d(50, 68);
+    Vector2d redIntake3 = new Vector2d(48, 68);
 
     Vector2d offWallRed = new Vector2d(-58,40);
     Vector2d offWallblue = new Vector2d(-64,-72);
@@ -102,10 +102,13 @@ public class AutoSequences {
         redintake2Traj = drive.trajectoryBuilder(redStartPose)
                 .splineToSplineHeading(new Pose2d(redIntake1, Math.toRadians(0)), Math.toRadians(0))
                 .splineTo(redIntake2, Math.toRadians(0))
-                .splineToSplineHeading(new Pose2d(redIntakeShoot2, Math.toRadians(-20)), Math.toRadians(-90))
+                .splineToSplineHeading(new Pose2d(redIntakeShoot2, Math.toRadians(-23
+                )), Math.toRadians(-90))
                 .build();
         redintake3Traj = drive.trajectoryBuilder(redStartPose)
-                .splineToSplineHeading(new Pose2d(redIntakeShoot3, Math.toRadians(-30.14)), Math.toRadians(0))
+                .splineToSplineHeading(new Pose2d(redIntake1, Math.toRadians(0)), Math.toRadians(0))
+                .splineTo(redIntake2, Math.toRadians(0))
+                .splineToSplineHeading(new Pose2d(redIntakeShoot3, Math.toRadians(-30)), Math.toRadians(0))
                 .build();
 
 
@@ -133,9 +136,9 @@ public class AutoSequences {
                 .splineToSplineHeading(new Pose2d(redPark2, Math.toRadians(-90)), Math.toRadians(-120))
                 .build();
         redPark3TrajectoryL = drive.trajectoryBuilder(new Pose2d(redIntakeShoot3, Math.toRadians(-30.14)))
-                .splineToSplineHeading(new Pose2d(redIntake1, Math.toRadians(0)), Math.toRadians(0))
-                .splineToSplineHeading(new Pose2d(redIntake3, Math.toRadians(0)), Math.toRadians(180))
-                .splineToSplineHeading(new Pose2d(redPark3, Math.toRadians(-20)), Math.toRadians(-90))
+                //.splineToSplineHeading(new Pose2d(redIntake1, Math.toRadians(30)), Math.toRadians(30))
+                //.splineToSplineHeading(new Pose2d(redIntake3, Math.toRadians(-150)), Math.toRadians(-150))
+                .splineToSplineHeading(new Pose2d(redPark3, Math.toRadians(-20)), Math.toRadians(0))
                 .build();
 
 
@@ -275,15 +278,17 @@ public class AutoSequences {
 
     public void redLong3(){
         drive.setPoseEstimate(redStartPose);
-        util.flywheelPower(highVelo);
+        util.intake(true);
         drive.followTrajectory(redintake3Traj);
-        util.waitTime(1000);
-        util.launch();
+        util.flywheelPower(highVelo);
+        util.waitTime(2500);
+        util.intake(false);
+        util.launch(2);
         util.intake(true);
         drive.followTrajectory(redPark3TrajectoryL);
         util.flywheelPower(lowVelo);
         util.intake(false);
-        util.launch(4);
+        util.launch(2);
         drive.turn(Math.toRadians(20));
     }
 
@@ -317,8 +322,8 @@ public class AutoSequences {
 
     public void blueLong3(){
         drive.setPoseEstimate(blueStartPose);
-        util.flywheelPower(highVelo);
         drive.followTrajectory(blueIntakeTraj3);
+        util.flywheelPower(highVelo);
         util.waitTime(2000);
         util.launch();
         util.intake(true);

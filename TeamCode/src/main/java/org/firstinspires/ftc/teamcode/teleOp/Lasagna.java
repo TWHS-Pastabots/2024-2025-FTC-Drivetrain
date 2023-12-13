@@ -158,12 +158,12 @@ public class Lasagna extends OpMode {
     public void lift(){
         double y = -gamepad2.left_stick_y *.5;
         hardware.liftMotor.setPower(y);
-        if(gamepad2.triangle){
-            hardware.liftMotor.setTargetPosition(30);
-            hardware.liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            hardware.liftMotor.setPower(-1.0);
-            telemetry.addLine("PID ACTIVE!");
-        }
+        //if(gamepad2.triangle){
+        //    hardware.liftMotor.setTargetPosition(30);
+        //    hardware.liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //    hardware.liftMotor.setPower(-1.0);
+        //    telemetry.addLine("PID ACTIVE!");
+        //}
     }
     public void arm(){
         double on = .25;
