@@ -67,9 +67,9 @@ public class AutoSequences {
     Vector2d blueShoot1 = new Vector2d(-55, -45);
     Vector2d blueShoot2 = new Vector2d(-35, -25);
 
-    Vector2d bluePark1 = new Vector2d(29, -31);
+    Vector2d bluePark1 = new Vector2d(27, -29);
     Vector2d bluePark2 = new Vector2d(12, -59);
-    Vector2d bluePark3 = new Vector2d(-26, -30);
+    Vector2d bluePark3 = new Vector2d(-26, -33);
 
     //Red Pos. + Vec.2D
     Pose2d redStartPose = new Pose2d(-64, 48, Math.toRadians(90));
