@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.teleOp;
 
-import org.firstinspires.ftc.teamcode.Hardware.LasagnaHardware;
+import org.firstinspires.ftc.teamcode.Hardware.RobotHardware;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -8,19 +8,17 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp (name = "Lasagna")
-public class Lasagna extends OpMode {
-    LasagnaHardware hardware;
-   
-    public static final double FAST_MODE = .9;
-    public static final double PREC_MODE = .45;
-    private int holdPosition = -530;
-
+@TeleOp (name = "Robot")
+public class RobotCode extends OpMode {
+    RobotHardware hardware;
+   //MAKE SURE TO CHANGE THESE. THESE ARE YOUR DRIVE MODES THAT YOU NEED FOR THE CHECKPOINT
+    public static final double FAST_MODE = 0;
+    public static final double SLOW_MODE = 0;
     double currentMode;
     ElapsedTime buttonTime = null;
 
     public void init(){
-        hardware = new LasagnaHardware();
+        hardware = new RobotHardware();
         hardware.init(hardwareMap);
         currentMode = FAST_MODE;
         buttonTime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
@@ -37,16 +35,12 @@ public class Lasagna extends OpMode {
         drive();
         intake();
         launch();
-        arm();
         lift();
         telemetry();
     }
     public void telemetry()
     {
-        //telemetry.addData("Left front", hardware.frontLeft.getVelocity());
-        //telemetry.addData("right front", hardware.frontRight.getVelocity());
-        //telemetry.addData("right back", hardware.rearRight.getVelocity());
-        //telemetry.addData("left back", hardware.rearLeft.getVelocity());
+        //this is the class you should put stuff in if you want to print to the phone.
 
     }
 
@@ -103,10 +97,10 @@ public class Lasagna extends OpMode {
         }
 
         if(gamepad1.left_bumper && currentMode == FAST_MODE && buttonTime.time() >= 500) {
-            currentMode = PREC_MODE;
+            currentMode = SLOW_MODE;
             buttonTime.reset();
         }
-        else if(gamepad1.left_bumper && currentMode == PREC_MODE && buttonTime.time() >= 500) {
+        else if(gamepad1.left_bumper && currentMode == SLOW_MODE && buttonTime.time() >= 500) {
             currentMode = FAST_MODE;
             buttonTime.reset();
         }
@@ -118,85 +112,15 @@ public class Lasagna extends OpMode {
     }
 
     public void intake(){
-        double intakeOn = -1;
-        double intakeOff = 0.0;
-        
-        if(gamepad2.square){
-            hardware.intakeMotor.setPower(intakeOn);
-        }
-        else{
-            hardware.intakeMotor.setPower(intakeOff);
-        }
+        //intake will go here
     }
 
     public void launch(){
-        double flyWheelOn = 1;
-        double flyWheelOff = 0.0;
-        boolean pushServo;
-
-        if(gamepad2.left_trigger>0){
-            hardware.flyWheelMotor.setPower(flyWheelOn);
-        }
-        else{
-            hardware.flyWheelMotor.setPower(flyWheelOff);
-        }
-        if(gamepad2.right_trigger>0){
-            pushServo = true;
-        }
-        else{
-            pushServo = false;
-        }
-        if(pushServo){
-            hardware.pushServo.setPosition(1.0);
-        }
-        else{
-            hardware.pushServo.setPosition(0.5);
-        }
+        //the things you need to do for launch will go here
 
     }
 
     public void lift(){
-        double y = -gamepad2.left_stick_y *.5;
-        hardware.liftMotor.setPower(y);
-        //if(gamepad2.triangle){
-        //    hardware.liftMotor.setTargetPosition(30);
-        //    hardware.liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //    hardware.liftMotor.setPower(-1.0);
-        //    telemetry.addLine("PID ACTIVE!");
-        //}
+       //climber code will go here
     }
-    public void arm(){
-        double on = .25;
-        double off = 0.0;
-        boolean hold = false;
-
-        if(gamepad1.square){
-            hardware.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            hardware.armMotor.setPower(on);
-            hold = false;
-        }
-        else if(gamepad1.circle){
-            hardware.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            hardware.armMotor.setPower(-1*on);
-            hold = false;
-        }
-        else if(gamepad1.cross) {
-            hold = true;
-            moveArm();
-        }
-        else{
-            if(hold == false)
-                hardware.armMotor.setPower(off);
-
-        telemetry.addData("Arm Position",hardware.liftMotor.getCurrentPosition());
-        telemetry.update();
-        }
-    }
-    public void moveArm(){
-        hardware.armMotor.setTargetPosition(holdPosition);
-        hardware.armMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        hardware.armMotor.setPower(1.0);
-    }
-
-
 }
