@@ -12,8 +12,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class RobotCode extends OpMode {
 
 
-    //Testtestesttstetgdjvhldsagjhf
-
 
     RobotHardware hardware;
    //MAKE SURE TO CHANGE THESE. THESE ARE YOUR DRIVE MODES THAT YOU NEED FOR THE CHECKPOINT
