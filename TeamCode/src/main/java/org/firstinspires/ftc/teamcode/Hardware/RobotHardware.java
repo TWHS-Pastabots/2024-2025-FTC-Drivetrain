@@ -15,7 +15,9 @@ public class RobotHardware {
     public DcMotorEx rearRight = null;
 
     public DcMotorEx[] motors;
-
+    public DcMotorEx intakeMotor = null;
+    public DcMotorEx launcherMotor = null;
+    public Servo launcherServo = null;
     public RobotHardware() {}
 
     public void init(HardwareMap hardwareMap){
@@ -53,13 +55,18 @@ public class RobotHardware {
 
     public void initializeIntakeMotors(HardwareMap hardwareMap){
         //this will be where your intake code goes eventually
+        intakeMotor = hardwareMap.get(DcMotorEx.class, RobotIDS.INTAKE_MOTOR);
+
     }
 
     public void initializeOutTakeMotors(HardwareMap hardwareMap){
         //this is where your shooter code will go eventually
+        launcherMotor = hardwareMap.get(DcMotorEx.class, RobotIDS.FLYWHEEL_MOTOR);
+
     }
 
     public void initializeServos(HardwareMap hardwareMap){
         //this is where all of your servos will go eventually
+        launcherServo = hardwareMap.get(Servo.class, RobotIDS.LAUNCHER_SERVO);
     }
 }

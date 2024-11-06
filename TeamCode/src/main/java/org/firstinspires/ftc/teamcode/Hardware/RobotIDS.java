@@ -20,4 +20,9 @@ public class RobotIDS
     public static final String TILT_SERVO = "tiltServo";
 
 
+    public static  final String INTAKE_MOTOR = "intakeMotor";
+    public static final String  FLYWHEEL_MOTOR = "flywheelMotor";
+
+    public static final String LAUNCHER_SERVO = "launcherServo";
+
 }

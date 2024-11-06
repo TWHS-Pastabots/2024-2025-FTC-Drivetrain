@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.teleOp;
 
+import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.firstinspires.ftc.teamcode.Hardware.RobotHardware;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp (name = "Robot")
@@ -20,12 +22,14 @@ public class RobotCode extends OpMode {
     double currentMode;
     ElapsedTime buttonTime = null;
 
+    ElapsedTime launcherTime = null;
+
     public void init(){
         hardware = new RobotHardware();
         hardware.init(hardwareMap);
         currentMode = FAST_MODE;
         buttonTime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
-
+        launcherTime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
         telemetry.addData("Status: ", "Initialized");
         telemetry.update();
     }
@@ -98,7 +102,34 @@ public class RobotCode extends OpMode {
             rightRearPower = -1;
             rightFrontPower = -1;
         }
+        if(gamepad2.circle)
+        {
+            hardware.intakeMotor.setPower(1);
 
+        }
+        else
+        {
+            hardware.intakeMotor.setPower(0);
+        }
+
+        if(gamepad2.square)
+        {
+
+
+            if (launcherTime.time() > 500)
+            {
+                hardware.launcherServo.setPosition(1);
+            }
+
+            hardware.launcherMotor.setPower(-1);
+
+        }
+        else
+        {
+            hardware.launcherServo.setPosition(0);
+
+            hardware.launcherMotor.setPower(0);
+        }
         if(gamepad1.left_bumper && currentMode == FAST_MODE && buttonTime.time() >= 500) {
             currentMode = SLOW_MODE;
             buttonTime.reset();
@@ -116,10 +147,21 @@ public class RobotCode extends OpMode {
 
     public void intake(){
         //intake will go here
+
+        hardware.intakeMotor.setPower(0);
+        hardware.intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        hardware.intakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     public void launch(){
         //the things you need to do for launch will go here
+        hardware.launcherMotor.setPower(0);
+        hardware.launcherMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        hardware.launcherMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        hardware.launcherServo.setPosition(0);
+
+
 
     }
 
